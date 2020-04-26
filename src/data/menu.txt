@@ -1,0 +1,13 @@
+1:  Display all accommodations    
+2:  Display available accommodations              
+3:  Add customer     
+4:  Remove customer     
+5:  List customers          
+6:  Create a package 
+7:  Add a lift pass to package 
+8:  Add lesson fees to package
+9:  List packages  
+10: Remove package
+11: Save packages to file    
+12: Read packages from file 
+13: Quit
