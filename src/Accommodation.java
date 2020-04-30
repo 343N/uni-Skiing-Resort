@@ -1,9 +1,11 @@
 import java.text.DecimalFormat;
 import java.time.LocalDate;
-//import java.util.HashMap;
 import java.util.HashSet;
+import java.io.Serializable;
 
-public class Accommodation {
+public class Accommodation implements Identifiable, Serializable {
+
+	static final long serialVersionUID = 1L;
 
 	static long IDcount = 0;
 
@@ -102,6 +104,10 @@ public class Accommodation {
 
 	public void setAvailabilityByDate(HashSet<String> availabilityByDate) {
 		this.availabilityByDate = availabilityByDate;
+	}
+
+	public String getStringID() {
+		return this.name;
 	}
 	
 	@Override

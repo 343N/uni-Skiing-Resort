@@ -1,8 +1,11 @@
 //import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.io.Serializable;
 
-public class Customer implements Identifiable {
+public class Customer implements Identifiable, Serializable {
 
+	static final long serialVersionUID = 1L;
+	
 	static long IDcounter = 0;
 	String name;
 	String phone;

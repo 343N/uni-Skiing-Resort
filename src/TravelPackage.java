@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 //import java.time.temporal.TemporalAmount;
@@ -5,7 +6,9 @@ import java.time.format.DateTimeFormatter;
 
 //import Customer.SkillLevel;
 
-public class TravelPackage implements Identifiable  {
+public class TravelPackage implements Identifiable, Serializable  {
+
+	static final long serialVersionUID = 1L;
 
 	static double STANDARD_PRICE = 26;
 	static long IDcounter = 0;
@@ -18,7 +21,7 @@ public class TravelPackage implements Identifiable  {
 	Customer customer;
 	LocalDate startDate;
 	LocalDate endDate;
-	long durationDays;
+	long durationDays = 0;
 	
 //	LocalDate liftPassDate;
 	long liftPassDuration;
@@ -92,7 +95,7 @@ public class TravelPackage implements Identifiable  {
 	}
 	
 	public double calculateAccommodationPrice() {
-		return accommodation.getPrice() * durationDays;
+		return (accommodation == null) ? 0 : accommodation.getPrice() * durationDays;
 	}
 	
 	public void calculatePrice() {
@@ -180,15 +183,16 @@ public class TravelPackage implements Identifiable  {
 		String typestr2 = null;
 		if (skillLevel != null) typestr1 = skillLevel.toString();
 		if (passType != null) typestr2 = passType.toString();
-		s += ID;
-		if (customer != null) s += "\n\tCustomer: " + customer.name + " - ID: " + customer.ID;
-		s += "\n\tStart Date:"  + startDate.format(DateTimeFormatter.ofPattern("d/M/yy"));
-		s += "\n\tStart Date:"  + endDate.format(DateTimeFormatter.ofPattern("d/M/yy"));
+		s += "ID: " + ID;
+		if (customer != null) s += "\n\tCustomer: " + customer.getName() + " - ID: " + customer.getID();
+		if (accommodation != null) s += "\n\tAccommodation: " + accommodation.getName() + " - ID: " + accommodation.getID();
+		s += "\n\tStart Date: "  + startDate.format(DateTimeFormatter.ofPattern("d/M/yy"));
+		s += "\n\tStart Date: "  + endDate.format(DateTimeFormatter.ofPattern("d/M/yy"));
 		if (skillLevel != null) 
 			s += "\n\tSkill Level: " + typestr1.substring(0,1).toUpperCase() + typestr1.substring(1).toLowerCase();
 		if (passType != null) 
 			s += "\n\tPass Type: " + typestr1.substring(0,1).toUpperCase() + typestr1.substring(1).toLowerCase();
-			s += "\n\tTotal Price: " + new DecimalFormat("###.##").format(totalPrice);
+			s += "\n\tTotal Price: " + new DecimalFormat("###.##").format(totalPrice) + "$";
 //		s += "\n\t" + new DecimalFormat("###.##").format(price) + "$ per night.";
 		
 		
