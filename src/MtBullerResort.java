@@ -51,7 +51,7 @@ public class MtBullerResort {
 				matches++;
 			}
 		}
-		
+		// if (matches > 1) println("Too many results! Be more specific with your search query");
 		if (matches == 0 || matches > 1) return null;
 		return lastMatch;
 	}

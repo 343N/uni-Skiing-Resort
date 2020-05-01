@@ -187,7 +187,7 @@ public class TravelPackage implements Identifiable, Serializable  {
 		if (customer != null) s += "\n\tCustomer: " + customer.getName() + " - ID: " + customer.getID();
 		if (accommodation != null) s += "\n\tAccommodation: " + accommodation.getName() + " - ID: " + accommodation.getID();
 		s += "\n\tStart Date: "  + startDate.format(DateTimeFormatter.ofPattern("d/M/yy"));
-		s += "\n\tStart Date: "  + endDate.format(DateTimeFormatter.ofPattern("d/M/yy"));
+		s += "\n\tEnd Date: "  + endDate.format(DateTimeFormatter.ofPattern("d/M/yy"));
 		if (skillLevel != null) 
 			s += "\n\tSkill Level: " + typestr1.substring(0,1).toUpperCase() + typestr1.substring(1).toLowerCase();
 		if (passType != null) 

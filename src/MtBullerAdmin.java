@@ -49,6 +49,7 @@ public class MtBullerAdmin {
 					for (Accommodation a : mbr.getAccommodations()) {
 						println(a.toString() + "\n");
 					}
+					println("There are " + mbr.getAccommodations().size() + " accommodations registered.");
 					break;
 				case 2:
 					println("1: Show today's available accommodation");
@@ -113,6 +114,7 @@ public class MtBullerAdmin {
 					Customer c = new Customer(fn, phonenumber, address, sl);
 					println("Customer created!");
 					println(c.toString() + "\n");
+					mbr.addCustomer(c);
 					break;
 				case 4:
 					Customer cust = null;
@@ -159,7 +161,7 @@ public class MtBullerAdmin {
 					}
 					if (a == null)
 						break;
-					println("Found acommodation!");
+					println("Found accommodation!");
 					println(a.toString());
 					println("Accommodation set!");
 					println("Please find the customer who this travel package will belong to.");
@@ -286,15 +288,18 @@ public class MtBullerAdmin {
 		return new Customer(name, phone, address, SkillLevel.values()[randomInt(SkillLevel.values().length)]);
 	}
 
-	public static Customer searchCustomer(MtBullerResort mbrInstance) {
+	public static Customer searchCustomer(MtBullerResort mbrInstance) throws NumberFormatException {
 		Customer cust = null;
 		boolean cancelled = false;
 		while (cust == null) {
 			String s1 = takeValidInput("Please enter a name or ID (or cancel to cancel): ",
 					"Invalid input!\nPlease enter a customer name or ID (or cancel to cancel): ");
 			cancelled = s1.equalsIgnoreCase("cancel");
-			if (cancelled) return null;
-			cust = (Customer) mbrInstance.searchByID((ArrayList) mbr.getCustomers(), Long.valueOf(s1));
+			if (cancelled) 
+				return null;
+			try{
+				cust = (Customer) mbrInstance.searchByID((ArrayList) mbr.getCustomers(), Long.valueOf(s1));
+			} catch (NumberFormatException nfe) {}
 			if (cust == null)
 				cust = (Customer) mbrInstance.searchByStringID((ArrayList) mbr.getCustomers(), s1);
 			if (cust == null)
@@ -306,38 +311,42 @@ public class MtBullerAdmin {
 
 	}
 
-	public static Accommodation searchAccommodation(MtBullerResort mbrInstance) {
+	public static Accommodation searchAccommodation(MtBullerResort mbrInstance) throws NumberFormatException {
 		Accommodation cust = null;
 		boolean cancelled = false;
 		while (cust == null) {
 			String s1 = takeValidInput("Please enter a accommodation name or ID (or cancel to cancel): ",
 					"Invalid input!\nPlease enter a accommodation name or ID (or cancel to cancel): ");
 			cancelled = s1.equalsIgnoreCase("cancel");
-			cust = (Accommodation) mbrInstance.searchByID((ArrayList) mbr.getAccommodations(), Long.valueOf(s1));
+			if (cancelled) 
+				return null;
+			try{
+				cust = (Accommodation) mbrInstance.searchByID((ArrayList) mbr.getAccommodations(), Long.valueOf(s1));
+			} catch (NumberFormatException nfe) {}
 			if (cust == null)
 				cust = (Accommodation) mbrInstance.searchByStringID((ArrayList) mbr.getAccommodations(), s1);
 			if (cust == null)
 				println("We can't find an accommodation with that ID or name!");
 		}
-		if (cancelled)
-			return null;
 		return cust;
 
 	}
 
-	public static TravelPackage searchPackage(MtBullerResort mbrInstance) {
+	public static TravelPackage searchPackage(MtBullerResort mbrInstance) throws NumberFormatException {
 		TravelPackage cust = null;
 		boolean cancelled = false;
 		while (cust == null) {
 			String s1 = takeValidInput("Please enter an ID (or cancel to cancel): ",
 					"Invalid input!\nPlease enter an ID (or cancel to cancel): ");
 			cancelled = s1.equalsIgnoreCase("cancel");
-			cust = (TravelPackage) mbrInstance.searchByID((ArrayList) mbr.getTravelPackages(), Long.valueOf(s1));
+			if (cancelled)
+				return null;
+			try{
+				cust = (TravelPackage) mbrInstance.searchByID((ArrayList) mbr.getTravelPackages(), Long.valueOf(s1));
+			} catch (NumberFormatException nfe) {}
 			if (cust == null)
 				println("We can't find travel package with that ID!");
 		}
-		if (cancelled)
-			return null;
 		return cust;
 
 	}
